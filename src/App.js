@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Game from './components/Game/Game'
+import Board from './components/Board/Board'
+import Menu from './components/Menu/Menu'
+import { PRE_DEFINED_GRIDS } from './constants'
 import './App.css';
 
-function App() {
+export default function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Game grid={PRE_DEFINED_GRIDS['Beginner']}>
+        {({ isGameOver, onCellClick, boardModel, onNewGame }) => {
+          return (
+            <>
+              <Menu onNewGame={onNewGame} options={PRE_DEFINED_GRIDS} />
+              <Board boardModel={boardModel} onCellClick={onCellClick} isGameOver={isGameOver} />
+              {isGameOver && <div className="game-over">Game over!</div>}
+            </>
+          )
+        }}
+      </Game>
     </div>
-  );
+  )
 }
-
-export default App;

@@ -1,38 +1,91 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html{
+  background: #f4f5f6;
+  font-family: 'helvetica', sans-serif;
+}
+
 .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.container{
+  margin: 20px;
+  background: #ffffff;
+  padding: 15px;
+  border: 1px solid #e9e9e9;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.game-over {
+  background-color: salmon;
+  padding: 10px;
+  border-radius: 2px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.options{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px solid #e9e9e9;
+  padding: 10px;
+  margin: 20px;
 }
 
-.App-link {
-  color: #61dafb;
+.options button {
+  border: none;
+  padding: 10px;
+  background: #e3e9ea;
+  outline: none;
+  width: 150px;
+  border-radius: 2px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.options button.new-game {
+  background: darkseagreen;
+}
+
+.menu{
+  margin: 7px 0;
+}
+
+.menu thead {
+  background: #e3e9ea;
+}
+
+.menu td {
+  padding: 5px 10px;
+}
+
+.game-board {
+  margin-top: 10px;
+  border-spacing: 0;
+  padding: 10px;
+  border: 1px solid #e9e9e9;
+  background: #f2f3f4;
+}
+
+.cell {
+  background: #98a1ac;
+  border-top: 3px solid #e3e9ea;
+  border-left: 3px solid #e3e9ea;
+  border-bottom: 3px solid #6C7A89;
+  border-right: 3px solid #6C7A89;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.opened-cell {
+  background: #c0c7cd;
+  border-top: 2px solid #616d7b;
+  border-left: 2px solid #616d7b;
+  border-right: 0px;
+  border-bottom: 0px;
 }

@@ -1,68 +1,41 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Minesweeper
 
-## Available Scripts
+## **Usage instructions**
 
-In the project directory, you can run:
+Just clone this repo, install the packages, fire up the server and you should be good to go! 
 
-### `yarn start`
+### `yarn install && yarn start`
+Open http://localhost:3000 to view it in the browser.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## **Design**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### User Interface
+There are 3 components:
+1. `<Game>`, a headless component which contains core logic of the game. It accepts a UI component as **function as child** pattern. Users can provide any implementation of Minesweeper UI to it without worrying about the game logic, and it will just work. **Benefits: Same game logic can be used with different game UI.**
+2. `<Board>`, a default UI implementation of game board which is passed to `<Game>`.
+3. `<Menu>` allows us to change difficulty level and start a new game. We've 3 predefined levels to choose from: **Beginner**, **Intermediate**, and **Expert**, each having a different board configuration(`rows`, `cols`, and `mines`).
 
-### `yarn test`
+### Model
+The game has 2 components: Board and Cells
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Board class contains:
+- properties: `rows`, `cols`, `cells`, and `plantedMinesLocation`
+- methods to manipulate cells inside board.
 
-### `yarn build`
+It is responsible for:
+1. Creating a board of size `rows` * `cols`. Each cell of the board is an instance of class `Cell`.
+2. Planting X mines randomly on the board.
+3. Calculate `nearbyMinesCount` for each cell
+4. Opening all the nearby cells when you click on a cell only if the cells are not mines. It stops opening cells once it reaches the boundary of numbers(nearbyMinesCount).
+5. Showing all the mines once the game is over.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Cell class contains
+- properties: `row`, `col`, `opened`, `mine`, and `nearbyMinesCount`
+- methods to manipulate cell properties
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Improvements/Missing
+1. Immutability
+2. Test cases
+3. Flagging feature

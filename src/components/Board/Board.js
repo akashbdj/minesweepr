@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Board extends Component {
     getValue(cell) {
-        if (!cell.isOpened()) {
+        if (!cell.isOpen()) {
             return null
         }
 
@@ -14,7 +14,7 @@ export default class Board extends Component {
         const { isGameOver, onCellClick } = this.props
         return (
             <td key={`${cell.row}-${cell.col}`}
-                className={`cell ${cell.isOpened() ? 'opened-cell' : ''}`}
+                className={`cell ${cell.isOpen() ? 'opened-cell' : ''}`}
                 onClick={() => !isGameOver && onCellClick(cell)}>
                 {this.getValue(cell)}
             </td>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Board from './Board'
+import Board from './models/board'
 
 export default class Game extends Component {
     constructor(props) {
@@ -27,10 +27,14 @@ export default class Game extends Component {
     }
 
     onCellClick(cell, action) {
+        if (cell.isOpen()) {
+            return
+        }
+
         const { board } = this.state
 
         if (cell.hasMine()) {
-            board.showAllMines() // TODO: Immutable
+            board.showMines()
             this.setState({ isGameOver: true })
             return
         }
@@ -39,7 +43,7 @@ export default class Game extends Component {
         // 1. go and place mines
         // 2. calculate nearby mines
         if (!this.isGameStarted) {
-            board.placeMines(cell)
+            board.plantMines(cell)
             board.caculateNearbyMines()
             this.isGameStarted = true
         }

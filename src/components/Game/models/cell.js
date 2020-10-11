@@ -7,7 +7,7 @@ export default class Cell {
         this.nearbyMinesCount = nearbyMinesCount
     }
 
-    setMine() {
+    placeMine() {
         this.mine = true
     }
 
@@ -15,11 +15,11 @@ export default class Cell {
         return this.mine
     }
 
-    setOpen() {
+    open() {
         this.opened = true
     }
 
-    isOpened() {
+    isOpen() {
         return this.opened
     }
 

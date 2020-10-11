@@ -1,5 +1,5 @@
-import Cell from './Cell'
-import { OPEN, NEARBY_COORDIDATES, FLAG } from './../../constants'
+import Cell from './cell'
+import { OPEN, NEARBY_COORDIDATES, FLAG } from '../../../constants'
 
 
 export default class Board {
@@ -11,7 +11,7 @@ export default class Board {
         this.plantedMinesLoc = []
 
         this.createBoard(rows, cols)
-        this.areInBound = this.areInBound.bind(this)
+        this.inBound = this.inBound.bind(this)
     }
 
     createBoard() {
@@ -26,7 +26,7 @@ export default class Board {
         return ~~(Math.random() * limit)
     }
 
-    placeMines(cell) {
+    plantMines(cell) {
         let placed = 0
         while (placed < this.mines) {
             const row = this.getRandom(this.rows)
@@ -34,15 +34,16 @@ export default class Board {
             const c = this.cells[row][col]
 
             // donot place mine on the first clicked cell
+            // or if it's already a mine
             if (cell !== c && !c.hasMine()) {
-                c.setMine()
+                c.placeMine()
                 this.plantedMinesLoc.push([row, col])
                 placed++
             }
         }
     }
 
-    areInBound(r, c) {
+    inBound(r, c) {
         const ROWS = this.cells.length
         const COLS = this.cells[0].length
         return r >= 0 && r < ROWS && c >= 0 && c < COLS
@@ -54,7 +55,7 @@ export default class Board {
                 let nr = r + dr
                 let nc = c + dc
 
-                if (this.areInBound(nr, nc) && !this.cells[nr][nc].hasMine()) {
+                if (this.inBound(nr, nc) && !this.cells[nr][nc].hasMine()) {
                     let cell = this.cells[nr][nc]
                     cell.setNearbyMinesCount(cell.getNearbyMinesCount() + 1)
                 }
@@ -63,19 +64,12 @@ export default class Board {
     }
 
     openCells(cell) {
-        const visited = new Set()
-        const inBound = this.areInBound
+        const inBound = this.inBound
         const cells = this.cells
 
         // Depth First Search for opening cells
         // till we find a boundary of numbers(count of nearbyMines)
         function _open(r, c) {
-            const key = `${r}-${c}`
-            if (visited.has(key)) {
-                return
-            }
-
-            visited.add(key)
             for (let [dr, dc] of NEARBY_COORDIDATES) {
                 let nr = r + dr
                 let nc = c + dc
@@ -83,9 +77,9 @@ export default class Board {
                 if (
                     inBound(nr, nc) &&
                     !cells[nr][nc].hasMine() &&
-                    !cells[nr][nc].isOpened()
+                    !cells[nr][nc].isOpen()
                 ) {
-                    cells[nr][nc].setOpen()
+                    cells[nr][nc].open()
 
                     // open more cells only when you meet a cell with 0 nearbyMines
                     // in other words, stop exploration after you've found a boundary
@@ -96,11 +90,12 @@ export default class Board {
             }
         }
 
-        cell.setOpen()
+        // first open the cell where a player clicked
+        cell.open()
+
+        // now open other cells recursively
         _open(cell.row, cell.col)
     }
-
-
 
     // action can be: OPEN a cell, FLAG a cell (not supported)
     update(cell, action = OPEN) {
@@ -111,24 +106,15 @@ export default class Board {
             case FLAG:
                 console.log("not supported")
                 break;
+            default:
+                console.log("unexpected action")
         }
 
-        return this.cells // TODO: avoid mutation without verbosity
-
-        // return this.cells.map((row) => {
-        //     return row.map((_cell) => {
-        //         if (_cell !== cell) {
-        //             return _cell
-        //         }
-        //         const nc = new Cell({ ...cell })
-        //         if (action === OPEN) nc.setOpen()
-        //         return nc
-        //     })
-        // })
+        return this.cells
     }
 
-    showAllMines() {
-        this.plantedMinesLoc.map(([r, c]) => this.cells[r][c].setOpen())
+    showMines() {
+        this.plantedMinesLoc.map(([r, c]) => this.cells[r][c].open())
     }
 
 }

@@ -5,7 +5,7 @@ export default class Menu extends Component {
         super(props)
         this.state = {
             optionsVisible: false,
-            chosenGridKey: 'Beginner' // TODO: better way to do this. 
+            chosenGridKey: 'Beginner'
         }
 
         this.handleOptionsClick = this.handleOptionsClick.bind(this)
@@ -63,10 +63,11 @@ export default class Menu extends Component {
     }
 
     render() {
+        const { optionsVisible, chosenGridKey } = this.state
         return (
             <div className="options">
-                <button id="game-options" onClick={this.handleOptionsClick}>Game options &#x25BE;</button>
-                {this.state.optionsVisible ? this.renderOptions() : null}
+                <button id="game-options" onClick={this.handleOptionsClick}>{chosenGridKey} &#x25BE;</button>
+                {optionsVisible && this.renderOptions()}
             </div>
         )
     }

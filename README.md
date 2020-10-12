@@ -18,9 +18,9 @@ There are 3 components:
 3. `<Menu>` allows us to change difficulty level and start a new game. We've 3 predefined levels to choose from: **Beginner**, **Intermediate**, and **Expert**, each having a different board configuration(`rows`, `cols`, and `mines`).
 
 ### Model
-The game has 2 components: Board and Cells
+The game has 2 components: **Board** and **Cells**
 
-Board class contains:
+**Board class** contains:
 - properties: `rows`, `cols`, `cells`, and `plantedMinesLocation`
 - methods to manipulate cells inside board.
 
@@ -31,7 +31,7 @@ It is responsible for:
 4. Opening all the nearby empty cells recursively when you click on a cell. It stops opening cells once it reaches the boundary of numbers(nearbyMinesCount).
 5. Showing all the mines once the game is over.
 
-Cell class contains
+**Cell class** contains
 - properties: `row`, `col`, `opened`, `mine`, and `nearbyMinesCount`
 - methods to manipulate cell properties
 

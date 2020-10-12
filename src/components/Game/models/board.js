@@ -1,7 +1,6 @@
 import Cell from './cell'
 import { OPEN, NEARBY_COORDIDATES, FLAG } from '../../../constants'
 
-
 export default class Board {
     constructor({ rows, cols, mines }) {
         this.rows = rows
@@ -15,9 +14,9 @@ export default class Board {
     }
 
     createBoard() {
-        for (let r = 0; r < this.rows; r++) {
-            for (let c = 0; c < this.cols; c++) {
-                this.cells[r][c] = new Cell({ row: r, col: c })
+        for (let row = 0; row < this.rows; row++) {
+            for (let col = 0; col < this.cols; col++) {
+                this.cells[row][col] = new Cell({ row, col })
             }
         }
     }
@@ -114,7 +113,9 @@ export default class Board {
     }
 
     showMines() {
-        this.plantedMinesLoc.map(([r, c]) => this.cells[r][c].open())
+        for (let [r, c] of this.plantedMinesLoc) {
+            this.cells[r][c].open()
+        }
     }
 
 }

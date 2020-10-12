@@ -6,7 +6,6 @@ import { PRE_DEFINED_GRIDS } from './constants'
 import './App.css';
 
 export default function App() {
-  console.log("You man!!!")
   return (
     <div className="App">
       <Game grid={PRE_DEFINED_GRIDS['Beginner']}>

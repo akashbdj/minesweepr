@@ -5,6 +5,7 @@ export default class Menu extends Component {
         super(props)
         this.state = {
             optionsVisible: false,
+            currentChosenGridKey: 'Beginner',
             chosenGridKey: 'Beginner'
         }
 
@@ -14,13 +15,17 @@ export default class Menu extends Component {
     }
 
     handleOptionsClick() {
-        this.setState((prevState) => ({ optionsVisible: !prevState.optionsVisible }))
+        this.setState((prevState) => ({
+            optionsVisible: !prevState.optionsVisible,
+            chosenGridKey: prevState.currentChosenGridKey
+        }))
     }
 
     handleNewGameClick() {
         const { options, onNewGame } = this.props
-        onNewGame(options[this.state.chosenGridKey])
-        this.setState({ optionsVisible: false })
+        const { chosenGridKey } = this.state
+        onNewGame(options[chosenGridKey])
+        this.setState({ optionsVisible: false, currentChosenGridKey: chosenGridKey })
     }
 
     handleLevelSelection(key) {
@@ -63,10 +68,10 @@ export default class Menu extends Component {
     }
 
     render() {
-        const { optionsVisible, chosenGridKey } = this.state
+        const { optionsVisible, currentChosenGridKey, chosenGridKey } = this.state
         return (
             <div className="options">
-                <button id="game-options" onClick={this.handleOptionsClick}>{chosenGridKey} &#x25BE;</button>
+                <button id="game-options" onClick={this.handleOptionsClick}>{currentChosenGridKey} &#x25BE;</button>
                 {optionsVisible && this.renderOptions()}
             </div>
         )

@@ -51,3 +51,7 @@ I haven't added tests yet, but I've structured this such that it would be straig
 ```javascript
 hasWon = ((rows * cols) - #mines) === #openedCells
 ```
+
+## Screenshot
+
+![Minesweeper](https://user-images.githubusercontent.com/7085282/95710300-025d1780-0c7e-11eb-8bb7-aa4aaeb51144.png "Minesweeper")
